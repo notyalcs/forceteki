@@ -50,10 +50,10 @@ export class PlayEventAction extends PlayCardAction {
 
         const eventAbility = context.source.getEventAbility();
 
-        // // if the opponent will be making any selections, then we need to do play in the correct order (i.e. move to discard first, then select)
-        // if (eventAbility.hasTargetsChosenByPlayer(context, context.player.opponent) || eventAbility.playerChoosingOptional === RelativePlayer.Opponent) {
-        //     return this.getDefaultTargetResults();
-        // }
+        // if the opponent will be making any selections, then we need to do play in the correct order (i.e. move to discard first, then select)
+        if (eventAbility.hasTargetsChosenByPlayer(context, context.player.opponent) || eventAbility.playerChoosingOptional === RelativePlayer.Opponent) {
+            return this.getDefaultTargetResults();
+        }
 
         return eventAbility.resolveEarlyTargets(context, passHandler, canCancel);
     }

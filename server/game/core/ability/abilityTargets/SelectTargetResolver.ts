@@ -116,8 +116,8 @@ export class SelectTargetResolver extends TargetResolver<ISelectTargetResolver<A
         return this.properties.showUnresolvable || this.isChoiceLegal(context.selects[this.name].choice, context);
     }
 
-    protected override hasTargetsChosenByInitiatingPlayer(context: AbilityContext): boolean {
+    protected override hasTargetsChosenByPlayer(context: AbilityContext, player: Player = context.player): boolean {
         const actions = Object.values(this.getChoices(context)).filter((value) => typeof value !== 'function');
-        return actions.some((action) => action.hasTargetsChosenByInitiatingPlayer(context));
+        return actions.some((action) => action.hasTargetsChosenByPlayer(context, player));
     }
 }

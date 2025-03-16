@@ -249,20 +249,21 @@ export class CardTargetResolver extends TargetResolver<ICardTargetsResolver<Abil
           this.selector.hasEnoughSelected(cards, context) && !this.selector.hasExceededLimit(cards, context));
     }
 
-    protected override hasTargetsChosenByInitiatingPlayer(context: AbilityContext) {
-        if (this.getChoosingPlayer(context) === context.player && (this.selector.optional || this.selector.hasEnoughTargets(context, context.player.opponent))) {
+    public override hasTargetsChosenByPlayer(context: AbilityContext, player: Player = context.player) {
+        if (this.getChoosingPlayer(context) === player && (this.selector.optional || this.selector.hasEnoughTargets(context, player))) {
             return true;
         }
-        return !this.properties.dependsOn && this.checkGameActionsForTargetsChosenByInitiatingPlayer(context);
+        return !this.properties.dependsOn && this.checkGameActionsForTargetsChosenByPlayer(context, player);
     }
 
-    private checkGameActionsForTargetsChosenByInitiatingPlayer(context: AbilityContext) {
+    // UP NEXT: what is going on with all of this
+    private checkGameActionsForTargetsChosenByPlayer(context: AbilityContext, player: Player = context.player) {
         return this.getAllLegalTargets(context).some((card) => {
             const contextCopy = this.getContextCopy(card, context);
-            if (this.properties.immediateEffect && this.properties.immediateEffect.hasTargetsChosenByInitiatingPlayer(contextCopy)) {
+            if (this.properties.immediateEffect && this.properties.immediateEffect.hasTargetsChosenByPlayer(contextCopy, player)) {
                 return true;
             } else if (this.dependentTarget) {
-                return this.dependentTarget.checkGameActionsForTargetsChosenByInitiatingPlayer(contextCopy);
+                return this.dependentTarget.hasTargetsChosenByPlayer(contextCopy, player);
             }
             return false;
         });

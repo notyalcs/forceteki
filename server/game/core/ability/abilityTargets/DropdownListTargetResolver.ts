@@ -51,8 +51,7 @@ export class DropdownListTargetResolver extends TargetResolver<IDropdownListTarg
         return !!context.selects[this.name];
     }
 
-    protected override hasTargetsChosenByInitiatingPlayer(context: AbilityContext): boolean {
+    protected override hasTargetsChosenByPlayer(context: AbilityContext, player: Player): boolean {
         return true;
     }
 }
-

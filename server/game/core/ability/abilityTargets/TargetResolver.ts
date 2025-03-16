@@ -34,7 +34,7 @@ export abstract class TargetResolver<TProps extends ITargetResolverBase<AbilityC
 
     protected abstract checkTarget(context: AbilityContext): boolean;
 
-    protected abstract hasTargetsChosenByInitiatingPlayer(context: AbilityContext): boolean;
+    protected abstract hasTargetsChosenByPlayer(context: AbilityContext, player: Player): boolean;
 
     protected abstract resolveInner(context: AbilityContext, targetResults, passPrompt, player: Player);
 
@@ -80,7 +80,7 @@ export abstract class TargetResolver<TProps extends ITargetResolverBase<AbilityC
         }
     }
 
-    protected getChoosingPlayer(context) {
+    public getChoosingPlayer(context) {
         let playerProp = this.properties.choosingPlayer;
         if (typeof playerProp === 'function') {
             playerProp = playerProp(context);

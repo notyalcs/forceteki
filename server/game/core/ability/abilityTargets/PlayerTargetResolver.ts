@@ -23,8 +23,8 @@ export class PlayerTargetResolver extends TargetResolver<IPlayerTargetResolver<A
         return true;
     }
 
-    protected override hasTargetsChosenByInitiatingPlayer(context: AbilityContext): boolean {
-        return this.getChoosingPlayer(context) === context.player;
+    protected override hasTargetsChosenByPlayer(context: AbilityContext, player: Player = context.player): boolean {
+        return this.getChoosingPlayer(context) === player;
     }
 
     protected override checkTarget(context: AbilityContext): boolean {
